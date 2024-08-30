@@ -18,16 +18,5 @@
         <input type="checkbox" name="respuesta2" value="5">5 <br>
         <button type="submit">Enviar</button>
     </form>
-
-    {% if not ejercicios %}
-    <h2></h2>
-    {% elif puntos == len(data) %}
-    <h2>Excelente puntaje perfecto</h2>
-    {% elif puntos == 1 %}
-    <h2>Buen trabajo pero debes mejorar 2 puntos buenos</h2>
-    {% else %}
-    <h2>Sacaste todas malas</h2>
-    {% endif %}
-    
 </body>
 </html>
