@@ -14,10 +14,11 @@ def index():
 @app.route("/preguntas", methods=["GET", "POST"])
 def preguntas():
     puntos = 0
+    ejercisios = {}
     if request.method == "POST":    
         for pregunta, respuesta in respuestas.items():
-            ejercisios = request.form.get(pregunta)
-            if ejercisios == respuesta:
+            ejercisios[pregunta] = request.form.get(pregunta)
+            if ejercisios[pregunta] == respuesta:
                 puntos += 1
 
     return render_template("preguntas.html", data=respuestas, puntos=puntos, len=len, ejercisios=ejercisios)
