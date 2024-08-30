@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
@@ -20,6 +20,15 @@ def preguntas():
             ejercicios[pregunta] = request.form.get(pregunta)
             if ejercicios[pregunta] == respuesta:
                 puntos += 1
+
+        if not respuestas:
+            return "<h2>No hay ejercicios disponibles.</h2>"
+        elif puntos == len(respuestas):
+            return "<h2>¡Excelente! Puntaje perfecto.</h2>"
+        elif puntos == 1:
+            return "<h2>Buen trabajo, pero debes mejorar. 2 puntos buenos.</h2>"
+        else:
+            return "<h2>Sacaste todas malas.</h2>"
 
     return render_template("preguntas.html", data=respuestas, puntos=puntos, len=len, ejercicios=ejercicios)
 
