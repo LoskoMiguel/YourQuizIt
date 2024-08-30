@@ -14,14 +14,14 @@ def index():
 @app.route("/preguntas", methods=["GET", "POST"])
 def preguntas():
     puntos = 0
-    ejercisios = {}
+    ejercicios = {}
     if request.method == "POST":    
         for pregunta, respuesta in respuestas.items():
-            ejercisios[pregunta] = request.form.get(pregunta)
-            if ejercisios[pregunta] == respuesta:
+            ejercicios[pregunta] = request.form.get(pregunta)
+            if ejercicios[pregunta] == respuesta:
                 puntos += 1
 
-    return render_template("preguntas.html", data=respuestas, puntos=puntos, len=len, ejercisios=ejercisios)
+    return render_template("preguntas.html", data=respuestas, puntos=puntos, len=len, ejercicios=ejercicios)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
