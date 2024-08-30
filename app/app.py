@@ -7,6 +7,10 @@ respuestas = {
     "respuesta2": "5"
 }
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 @app.route("/preguntas", methods=["GET", "POST"])
 def preguntas():
     puntos = 0
