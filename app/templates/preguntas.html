@@ -6,7 +6,7 @@
     <title>Prueba</title>
 </head>
 <body>
-    <form action="{{url_for('preguntas')}}" method="post">
+    <form action="{{ url_for('preguntas') }}" method="post">
         <p>Cual es la suma entre 1 + 1:</p> <br>
         <input type="checkbox" name="respuesta1" value="3"> 3 <br>
         <input type="checkbox" name="respuesta1" value="2"> 2 <br>
@@ -19,15 +19,15 @@
         <button type="submit">Enviar</button>
     </form>
 
-    {%if ejercisios is none%}
+    {% if not ejercicios %}
     <h2></h2>
-    {%elif puntos == len(data)%}
+    {% elif puntos == len(data) %}
     <h2>Excelente puntaje perfecto</h2>
-    {%elif puntos == 1%}
+    {% elif puntos == 1 %}
     <h2>Buen trabajo pero debes mejorar 2 puntos buenos</h2>
-    {%else%}
+    {% else %}
     <h2>Sacaste todas malas</h2>
-    {%endif%}
+    {% endif %}
     
 </body>
 </html>
