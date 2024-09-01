@@ -14,23 +14,25 @@ def index():
 @app.route("/preguntas", methods=["GET", "POST"])
 def preguntas():
     puntos = 0
-    ejercicios = {}
-    if request.method == "POST":    
+    if request.method == "POST":
+        ejercicios = {}
         for pregunta, respuesta in respuestas.items():
             ejercicios[pregunta] = request.form.get(pregunta)
             if ejercicios[pregunta] == respuesta:
                 puntos += 1
 
         if not respuestas:
-            return "<h2>No hay ejercicios disponibles.</h2>"
+            mensaje = "No hay ejercicios disponibles."
         elif puntos == len(respuestas):
-            return "<h2>¡Excelente! Puntaje perfecto.</h2>"
+            mensaje = "¡Excelente! Puntaje perfecto."
         elif puntos == 1:
-            return "<h2>Buen trabajo, pero debes mejorar. 2 puntos buenos.</h2>"
+            mensaje = "Buen trabajo, pero debes mejorar. 2 puntos buenos."
         else:
-            return "<h2>Sacaste todas malas.</h2>"
+            mensaje = "Sacaste todas malas."
 
-    return render_template("preguntas.html", data=respuestas, puntos=puntos, len=len, ejercicios=ejercicios)
+        return render_template("resultados.html", mensaje=mensaje)
+
+    return render_template("preguntas.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
