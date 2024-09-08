@@ -1,10 +1,10 @@
 import json
-from app.utils import generar_preguntas, respuestas
+from app.utils import generar_preguntas
 from flask import Blueprint, request, render_template, session
 
 quiz = Blueprint('quiz', __name__)
 
-@quiz.route("/preguntas", methods=["GET", "POST"])
+@quiz.route("/quizzes", methods=["GET", "POST"])
 def preguntas():
     if request.method == "POST":
         nivel = request.form.get("nivel")
@@ -18,7 +18,7 @@ def preguntas():
         # Esto es solo para depuración (Después lo eliminamos)
         print(respuestas_correctas)
         
-        return render_template("preguntas.html", preguntas=preguntas_generadas)
+        return render_template("preguntas.html", preguntas=preguntas_generadas, nivel=nivel)
 
     return render_template("preguntas.html")
 

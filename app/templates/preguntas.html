@@ -11,12 +11,15 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Formulario para seleccionar nivel y cantidad de preguntas -->
+                    {% if not preguntas %}
                     <form id="settingsForm" action="{{ url_for('quiz.preguntas') }}" method="post">
                         <div class="form-group">
                             <label for="nivel">Nivel:</label>
                             <select class="form-control" id="nivel" name="nivel">
-                                <option value="A1-A2">Principiante (A1-A2)</option>
-                                <option value="B1-B2">Intermedio (B1-B2)</option>
+                                <option value="A1">Principiante (A1)</option>
+                                <option value="A2">Elemental (A2)</option>
+                                <option value="B1">Intermedio (B1)</option>
+                                <option value="B2">Intermedio Alto (B2)</option>
                                 <option value="C1">Avanzado (C1)</option>
                             </select>
                         </div>
@@ -26,28 +29,44 @@
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Generar Preguntas</button>
                     </form>
+                    {% endif %}
 
                     <!-- Contenedor de preguntas generadas dinámicamente -->
                     {% if preguntas %}
                     <form id="quizForm" action="{{ url_for('quiz.resultados') }}" method="post">
+                        <input type="hidden" name="nivel" value="{{ nivel }}">
                         <div id="questionContainer">
                             {% for pregunta in preguntas %}
                                 <div class="question" id="{{pregunta.question_name}}" style="{% if loop.index != 1 %}display:none;{% endif %}">
-                                    <p>{{ pregunta.question }} <span class="text-muted"> ({{ loop.index }}/{{ preguntas|length }})</span></p>
-                                    <p> {{pregunta.answer}} </p>
-                                    {% for opcion in pregunta.options %}
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="{{pregunta.question_name}}" value="{{ opcion }}" id="{{pregunta.question_name}}">
-                                            <label class="form-check-label" for="{{pregunta.question_name}}">{{ opcion }}</label>
+                                    <!-- Tarjeta para el título del nivel del cuestionario -->
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            Nivel {{ nivel }}
                                         </div>
-                                    {% endfor %}
-                                    <input type="hidden" name="q_text_{{pregunta.question_name}}" value="{{ pregunta.question }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ pregunta.question }}</h5>
+                                        </div>
+                                    </div>
+                                    <!-- Tarjeta para las opciones -->
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            {% for opcion in pregunta.options %}
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="{{pregunta.question_name}}" value="{{ opcion }}" id="{{pregunta.question_name}}">
+                                                    <label class="form-check-label" for="{{pregunta.question_name}}">{{ opcion }}</label>
+                                                </div>
+                                            {% endfor %}
+                                            <input type="hidden" name="q_text_{{pregunta.question_name}}" value="{{ pregunta.question }}">
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
+                        <!-- Contador de preguntas respondidas y botón de próxima pregunta -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-primary" id="nextButton" onclick="showNextQuestion()">Next</button>
-                            <button type="submit" class="btn btn-success" id="submitButton" style="display:none;">Submit</button>
+                            <span id="questionCounter">Pregunta 1 de {{ preguntas|length }}</span>
+                            <button type="button" class="btn btn-primary" id="nextButton" onclick="showNextQuestion()">Próxima pregunta</button>
+                            <button type="submit" class="btn btn-success" id="submitButton" style="display:none;">Enviar</button>
                         </div>
                     </form>
                     {% endif %}
@@ -58,22 +77,22 @@
 </div>
 
 <script>
-    let currentQuestion = 1;
-    const totalQuestions = {{ preguntas|length }};
+    let currentQuestionIndex = 0;
+    const questions = document.querySelectorAll('.question');
+    const nextButton = document.getElementById('nextButton');
+    const submitButton = document.getElementById('submitButton');
+    const questionCounter = document.getElementById('questionCounter');
 
     function showNextQuestion() {
-        const currentQuestionDiv = document.getElementById(`question${currentQuestion}`);
-        const nextQuestionDiv = document.getElementById(`question${currentQuestion + 1}`);
-
-        if (nextQuestionDiv) {
-            currentQuestionDiv.style.display = 'none';
-            nextQuestionDiv.style.display = 'block';
-            currentQuestion++;
-        }
-
-        if (currentQuestion === totalQuestions) {
-            document.getElementById('nextButton').style.display = 'none';
-            document.getElementById('submitButton').style.display = 'block';
+        if (currentQuestionIndex < questions.length - 1) {
+            questions[currentQuestionIndex].style.display = 'none';
+            currentQuestionIndex++;
+            questions[currentQuestionIndex].style.display = 'block';
+            questionCounter.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.style.display = 'none';
+                submitButton.style.display = 'block';
+            }
         }
     }
 </script>

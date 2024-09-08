@@ -7,10 +7,9 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-respuestas = ''
-
 def generar_preguntas(nivel, cantidad):
     print(f"\nGenerando {cantidad} preguntas de nivel {nivel}...\n\n")
+    
     prompt = f"""
     Necesito practicar mi inglés.
     Genera {cantidad} preguntas de inglés de nivel {nivel} centradas en gramática y vocabulario.
