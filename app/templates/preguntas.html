@@ -5,103 +5,105 @@
 {% block body_attributes %}class="bg-dark"{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <!-- Formulario para seleccionar nivel y cantidad de preguntas -->
-                    {% if not preguntas %}
-                    <form id="settingsForm" action="{{ url_for('quiz.preguntas') }}" method="post">
-                        <div class="form-group">
-                            <label for="nivel">Nivel:</label>
-                            <select class="form-control" id="nivel" name="nivel">
-                                <option value="A1">Principiante (A1)</option>
-                                <option value="A2">Elemental (A2)</option>
-                                <option value="B1">Intermedio (B1)</option>
-                                <option value="B2">Intermedio Alto (B2)</option>
-                                <option value="C1">Avanzado (C1)</option>
-                            </select>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="cantidad">Cantidad de Preguntas:</label>
-                            <input type="number" class="form-control" id="cantidad" name="cantidad" min="3" max="20">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="tiempo_verbal">Tiempo Verbal:</label>
-                            <select class="form-control select2" id="tiempo_verbal" name="tiempo_verbal[]" multiple="multiple">
-                                <option value="Todos">Todos Los Tiempos Verbales</option>
-                                <option value="presente_simple">Presente Simple</option>
-                                <option value="presente_continuo">Presente Continuo</option>
-                                <option value="presente_perfecto">Presente Perfecto</option>
-                                <option value="presente_perfecto_continuo">Presente Perfecto Continuo</option>
-                                <option value="pasado_simple">Pasado Simple</option>
-                                <option value="pasado_continuo">Pasado Continuo</option>
-                                <option value="pasado_perfecto">Pasado Perfecto</option>
-                                <option value="pasado_perfecto_continuo">Pasado Perfecto Continuo</option>
-                                <option value="futuro_simple">Futuro Simple</option>
-                                <option value="futuro_continuo">Futuro Continuo</option>
-                                <option value="futuro_perfecto">Futuro Perfecto</option>
-                                <option value="futuro_perfecto_continuo">Futuro Perfecto Continuo</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">Generar Preguntas</button>
-                        <script>
-                            $(document).ready(function() {
-                                $('.select2').select2({
-                                    placeholder: "Selecciona los tiempos verbales",
-                                    allowClear: true
+<header class="masthead">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-start">
+                        <!-- Formulario para seleccionar nivel y cantidad de preguntas -->
+                        {% if not preguntas %}
+                        <form id="settingsForm" action="{{ url_for('quiz.preguntas') }}" method="post">
+                            <div class="form-group">
+                                <label for="nivel">Nivel:</label>
+                                <select class="form-control" id="nivel" name="nivel">
+                                    <option value="A1">Principiante (A1)</option>
+                                    <option value="A2">Elemental (A2)</option>
+                                    <option value="B1">Intermedio (B1)</option>
+                                    <option value="B2">Intermedio Alto (B2)</option>
+                                    <option value="C1">Avanzado (C1)</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="cantidad">Cantidad de Preguntas:</label>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" min="3" max="20">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="tiempo_verbal">Tiempo Verbal:</label>
+                                <select class="form-control select2" id="tiempo_verbal" name="tiempo_verbal[]" multiple="multiple">
+                                    <option value="Todos">Todos Los Tiempos Verbales</option>
+                                    <option value="presente_simple">Presente Simple</option>
+                                    <option value="presente_continuo">Presente Continuo</option>
+                                    <option value="presente_perfecto">Presente Perfecto</option>
+                                    <option value="presente_perfecto_continuo">Presente Perfecto Continuo</option>
+                                    <option value="pasado_simple">Pasado Simple</option>
+                                    <option value="pasado_continuo">Pasado Continuo</option>
+                                    <option value="pasado_perfecto">Pasado Perfecto</option>
+                                    <option value="pasado_perfecto_continuo">Pasado Perfecto Continuo</option>
+                                    <option value="futuro_simple">Futuro Simple</option>
+                                    <option value="futuro_continuo">Futuro Continuo</option>
+                                    <option value="futuro_perfecto">Futuro Perfecto</option>
+                                    <option value="futuro_perfecto_continuo">Futuro Perfecto Continuo</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Generar Preguntas</button>
+                            <script>
+                                $(document).ready(function() {
+                                    $('.select2').select2({
+                                        placeholder: "Selecciona los tiempos verbales",
+                                        allowClear: true
+                                    });
                                 });
-                            });
-                        </script>
-                                                
-                    </form>
-                    {% endif %}
+                            </script>
+                                                    
+                        </form>
+                        {% endif %}
 
-                    <!-- Contenedor de preguntas generadas dinámicamente -->
-                    {% if preguntas %}
-                    <form id="quizForm" action="{{ url_for('quiz.resultados') }}" method="post">
-                        <input type="hidden" name="nivel" value="{{ nivel }}">
-                        <div id="questionContainer">
-                            {% for pregunta in preguntas %}
-                                <div class="question" id="{{pregunta.question_name}}" style="{% if loop.index != 1 %}display:none;{% endif %}">
-                                    <!-- Tarjeta para el título del nivel del cuestionario -->
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            Nivel {{ nivel }}
+                        <!-- Contenedor de preguntas generadas dinámicamente -->
+                        {% if preguntas %}
+                        <form id="quizForm" action="{{ url_for('quiz.resultados') }}" method="post">
+                            <input type="hidden" name="nivel" value="{{ nivel }}">
+                            <div id="questionContainer">
+                                {% for pregunta in preguntas %}
+                                    <div class="question" id="{{pregunta.question_name}}" style="{% if loop.index != 1 %}display:none;{% endif %}">
+                                        <!-- Tarjeta para el título del nivel del cuestionario -->
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                Nivel {{ nivel }}
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ pregunta.question }}</h5>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ pregunta.question }}</h5>
+                                        <!-- Tarjeta para las opciones -->
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                {% for opcion in pregunta.options %}
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="{{pregunta.question_name}}" value="{{ opcion }}" id="{{pregunta.question_name}}">
+                                                        <label class="form-check-label" for="{{pregunta.question_name}}">{{ opcion }}</label>
+                                                    </div>
+                                                {% endfor %}
+                                                <input type="hidden" name="q_text_{{pregunta.question_name}}" value="{{ pregunta.question }}">
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Tarjeta para las opciones -->
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            {% for opcion in pregunta.options %}
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="{{pregunta.question_name}}" value="{{ opcion }}" id="{{pregunta.question_name}}_{{opcion}}">
-                                                    <label class="form-check-label" for="{{pregunta.question_name}}_{{opcion}}">{{ opcion }}</label>
-                                                </div>
-                                            {% endfor %}
-                                            <input type="hidden" name="q_text_{{pregunta.question_name}}" value="{{ pregunta.question }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <!-- Contador de preguntas respondidas y botón de próxima pregunta -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <span id="questionCounter">Pregunta 1 de {{ preguntas|length }}</span>
-                            <button type="button" class="btn btn-primary" id="nextButton" onclick="showNextQuestion()">Próxima pregunta</button>
-                            <button type="submit" class="btn btn-success" id="submitButton" style="display:none;">Enviar</button>
-                        </div>
-                    </form>
-                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <!-- Contador de preguntas respondidas y botón de próxima pregunta -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <span id="questionCounter">Pregunta 1 de {{ preguntas|length }}</span>
+                                <button type="button" class="btn btn-primary" id="nextButton" onclick="showNextQuestion()">Próxima pregunta</button>
+                                <button type="submit" class="btn btn-success" id="submitButton" style="display:none;">Enviar</button>
+                            </div>
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</header>
 
 <script>
     let currentQuestionIndex = 0;
