@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados{% endblock %}
+
+{% block body_attributes %}class="bg-dark"{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2>{{ mensaje }}</h2>
+                    <p>Puntaje: {{ puntos }} / {{ total_preguntas }}</p>
+                    <p>Porcentaje de respuestas correctas: {{ porcentaje_correctas }}</p>
+                    <hr>
+                    <h4>Detalles de tus respuestas:</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Pregunta</th>
+                                <th>Resultado</th>
+                                <th>Tu respuesta</th>
+                                <th>Respuesta correcta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detalle in detalles_respuestas %}
+                                <tr>
+                                    <td class="text-start">{{ detalle.pregunta }}</td>
+                                    <td class="text-start">
+                                        {% if detalle.correcto %}
+                                        <span class="text-success">Correcto</span>
+                                        {% else %}
+                                        <span class="text-danger">Incorrecto</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-start">{{ detalle.respuesta_usuario }}</td>
+                                    <td class="text-start">{{ detalle.respuesta_correcta }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-2 mb-2 d-flex justify-content-end">
+                        <a href="{{ url_for('quiz.preguntas') }}" class="btn btn-primary">Volver a intentar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
