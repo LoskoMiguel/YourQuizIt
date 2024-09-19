@@ -46,16 +46,10 @@
                                     <option value="futuro_perfecto_continuo">Futuro Perfecto Continuo</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Generar Preguntas</button>
-                            <script>
-                                $(document).ready(function() {
-                                    $('.select2').select2({
-                                        placeholder: "Selecciona los tiempos verbales",
-                                        allowClear: true
-                                    });
-                                });
-                            </script>
-                                                    
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="submit" class="btn btn-primary w-50 me-2">Generar Preguntas</button>
+                                <a href="/" class="btn btn-light w-50">Volver</a>
+                            </div>
                         </form>
                         {% endif %}
 
@@ -124,5 +118,14 @@
             }
         }
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Selecciona los tiempos verbales",
+            allowClear: true
+        });
+    });
 </script>
 {% endblock %}

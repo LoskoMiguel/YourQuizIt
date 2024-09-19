@@ -11344,3 +11344,83 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+.select2-container .select2-selection--multiple {
+  background-color: #18181b;
+  border: 1px solid #ced4da;
+  color: #fff;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #495057;
+  border: 1px solid #252429;
+  color: #fff;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  color: #fff;
+}
+
+.select2-container--default .select2-results__option {
+  background-color: #18181b;
+  color: #71717a;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+  background-color: #495057;
+  color: #fff;
+}
+
+.select2-container--default .select2-selection--multiple {
+  background-color: #18181b !important;
+  border: 1px solid #252429 !important;
+  border-radius: 4px !important;
+  cursor: text !important;
+  padding-bottom: 5px !important;
+  padding-right: 5px !important;
+}
+
+.select2-dropdown {
+  background-color: #18181b !important;
+  border: 1px solid #252429 !important;
+  border-radius: 4px !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: #495057 !important;
+  color: #fff !important;
+}
+
+/* Personalización del scroll */
+.select2-container--default .select2-results>.select2-results__options::-webkit-scrollbar {
+  width: 8px;
+  background-color: #18181b;
+}
+
+.select2-container--default .select2-results>.select2-results__options::-webkit-scrollbar-thumb {
+  background-color: #495057;
+  border-radius: 4px;
+}
+
+.select2-container--default .select2-results>.select2-results__options::-webkit-scrollbar-track {
+  background-color: #18181b;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #495057 !important;
+  border: 1px solid #252429 !important;
+  /* border-radius: 4px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 0; */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  color: #fff !important;
+}
