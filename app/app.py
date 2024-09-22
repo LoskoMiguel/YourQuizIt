@@ -11,5 +11,6 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 app.register_blueprint(main_blueprint)
 app.register_blueprint(quiz_blueprint)
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
